@@ -94,7 +94,7 @@
 
 		{#if !logged.loggedIn}
 			<div class="loggedIn">
-				<h1 class="text-2xl">로ㄹㄹㄹ그인</h1>
+				<h1 class="text-2xl">로그인</h1>
 				<input bind:value={inputId} type="text" placeholder='아이디'>
 				<input bind:value={inputPass} type="password" placeholder='비밀번호'> 
 				<button on:click={saveId} on:click={logIn}>로그인</button>
