@@ -1,7 +1,7 @@
 <script>
     import "../app.css";
     // import { time } from './main.js';
-	import Login from "./LogIn.svelte";
+	import Login from "./login.svelte";
     import Editmode from "./editmode.svelte";
 	
 </script>
