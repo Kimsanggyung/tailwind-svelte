@@ -3,12 +3,13 @@
 	import { name, idPicture, birth, pictureAlt } from "../store.js";
 	import Editmode from "./editmode.svelte";
 	import { browser } from '$app/env';
+	import "../app.css";
 
 	const userId = 'a';
-	const passWord = 123;
+	const passWord = '123';
 
 	const userNo2 = 'b';
-	const passNo2 = 345;
+	const passNo2 = '345';
 
 	let inputId = ''
 	let inputPass = ''
@@ -37,6 +38,7 @@
 			inputId = storageId
 			console.log(inputId)
 		}
+		
 		storageName = localStorage.getItem('name')
 		storageBirth = localStorage.getItem('birth')
 		storageImg = localStorage.getItem('img')
@@ -44,7 +46,12 @@
 	}
 	
 	function logIn(){
-		if(userId == inputId && passWord == inputPass && storageName == null && storageBirth == null && storageImg == null && storageAlt == null){
+		if(check.checked){
+            localStorage.setItem('ID', inputId)
+			console.log(inputId)
+        }
+
+		else if(userId == inputId && passWord === inputPass && storageName == null && storageBirth == null && storageImg == null && storageAlt == null){
 			name.set('이씨')
 			birth.set('1968년 6월 23일')
 			idPicture.set('https://ww.namu.la/s/91986ffc01b6136fb453c4ff8b3e63adf90e525e6b10e1643058339c924830276d1fc646c2ac918d1f31e83c59308ea232acb64afb280dabeee0afc024b9dd3063662e1cc7dd5e8191c10ae35b0c811b')
@@ -81,9 +88,12 @@
 
     const CLICKCHECK = () => check.checked = !check.checked;
 
+	console.log(inputId)
+
 	function saveId(){
         if(check.checked && browser){
             localStorage.setItem('ID', inputId)
+			console.log(inputId)
         }
     }
 
@@ -93,14 +103,27 @@
 	<main>
 
 		{#if !logged.loggedIn}
-			<div class="loggedIn">
-				<h1 class="text-2xl">로그인</h1>
-				<input bind:value={inputId} type="text" placeholder='아이디'>
-				<input bind:value={inputPass} type="password" placeholder='비밀번호'> 
-				<button on:click={saveId} on:click={logIn}>로그인</button>
-				<br/>
-				<label><input type="checkbox" id="id" on:click={CLICKCHECK}>아이디 저장</label>
-				<span id=error></span>
+			<div class="flex items-center justify-center min-h-screen bg-gray-100">
+				<div class="px-8 py-6 mt-4 text-left bg-white shadow-lg">
+					<h3 class="text-2xl font-bold text-center">로그인</h3>
+						<div class="mt-4">
+							<div>
+								<input bind:value={inputId} type="text" placeholder="아이디"
+									class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600">
+							</div>
+							<div class="mt-4">
+								<input bind:value={inputPass} type="password" placeholder="비밀번호"
+									class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600">
+							</div>
+							{#if userNo2 !== inputId && passNo2 !== inputPass && userId !== inputId && passWord !== inputPass}
+								<span class='text-red-600'>아이디 또는 비밀번호가 옳지않습니다.</span>
+							{/if}
+							<div class="flex items-baseline justify-between">
+								<button onclick={logIn} class="px-6 py-2 mt-4 text-white bg-blue-600 rounded-lg hover:bg-blue-900">로그인</button>
+								<label><input type="checkbox" on:click={CLICKCHECK} class="text-sm text-blue-600 hover:underline">아이디 저장</label>
+							</div>
+						</div>
+				</div>
 			</div>
 		{/if}
 
@@ -123,10 +146,6 @@
 </body>
 
 <style>
-
-#error{
-	color: red;
-}
 
 #Lee{
 	width: 175px;
