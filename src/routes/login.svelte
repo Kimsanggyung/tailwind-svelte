@@ -54,17 +54,30 @@
 
     const findUser = checkUser(inputId, inputPass);
 
-    if(findUser){ //login 가능한 상태
+    if(findUser && browser){ //login 가능한 상태
 		name.set(findUser.name);
-      	birth.set(findUser.birth);
+		birth.set(findUser.birth);
       	idPicture.set(findUser.img);
       	pictureAlt.set(findUser.imgAlt);
       	logged = true;
       	errored =false;
+		localStorage.setItem('Key', (inputId))
 	} else {
       errored = true;
     }
 }
+
+
+	if(browser){
+		let storageData = {
+		key: localStorage.getItem('Key'),
+		storageName: localStorage.getItem('name'),
+		storageBirth: localStorage.getItem('birth'),
+		storageImg: localStorage.getItem('img'),
+		storageAlt: localStorage.getItem('alt')
+		}
+		console.log(storageData)
+	}
 
 </script>
 <body>
