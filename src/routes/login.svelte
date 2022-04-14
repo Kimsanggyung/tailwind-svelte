@@ -5,14 +5,21 @@
 	import { browser } from '$app/env';
 	import "../app.css";
 
-	const userId = 'a';
-	const passWord = '123';
+	const userData = [
+		{ 
+			id: 'a', pwd: '123',
+			name: '이씨', birth: '1968년 6월 23일',
+			img: 'a.jpeg', imgAlt: 'Lee Jae-yong'
+		},
+		{ 
+			id: 'b', pwd: '345',
+			name: '정씨', birth: '1968년 9월 19일',
+			img: 'b.jpeg', imgAlt: 'Chung Yong-jin'
+		}
+	];
 
-	const userNo2 = 'b';
-	const passNo2 = '345';
-
-	let inputId = ''
-	let inputPass = ''
+	let inputId='';
+	let inputPass=';'
 
 	console.log(inputId)
 
