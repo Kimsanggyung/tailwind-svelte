@@ -44,10 +44,10 @@
 
 	}
 
-  const checkUser = (id, pwd) => {
-    const findUser = userData.find(user => user.id === id && user.pwd === pwd)
-    return findUser;
-  }
+	const checkUser = (id, pwd) => {
+		const findUser = userData.find(user => user.id === id && user.pwd === pwd)
+		return findUser;
+	}
 	
 	const logIn = () => {
     if(check.checked) localStorage.setItem('ID', inputId);
@@ -63,8 +63,8 @@
       	errored =false;
 		localStorage.setItem('Key', (inputId))
 	} else {
-      errored = true;
-    }
+		errored = true;
+	}
 }
 
 
