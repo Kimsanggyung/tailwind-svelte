@@ -1,6 +1,6 @@
 <script>
  	import { browser } from '$app/env';
-    import { name, idPicture, birth, pictureAlt } from "../store.js";
+    import { loginUserData } from "../store.js";
     
     let	inputName = '';
 	let inputBirth = '';
@@ -14,26 +14,22 @@
 	}
 
 	const change = () => {
-		name.set(inputName);
-		birth.set(inputBirth);
-		idPicture.set(inputPicture);
-		pictureAlt.set(inputAlt);
-		console.log(name);
 		editMode = !editMode
 
 		let setInfo = {
 			name: inputName,
 			birth: inputBirth,
-			img: inputPicture,
-			alt: inputAlt
+			idPicture: inputPicture,
+			pictureAlt: inputAlt
 		}
+		loginUserData.set(setInfo)
 		console.log(setInfo)
 		if(browser){
-			localStorage.setItem('ID-a', JSON.stringify(setInfo))
+			console.log(loginUserData.userId)
+			localStorage.setItem((loginUserData.userId), JSON.stringify(setInfo))
 		}		
 	}
 
-	
 </script>
     {#if !editMode && browser} 
     <input bind:value={inputName} type="text" placeholder='이름을 입력해 주세요.'> 

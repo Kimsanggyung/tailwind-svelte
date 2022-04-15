@@ -1,5 +1,5 @@
 <script>
-	import { name, idPicture, birth, pictureAlt } from "../store.js";
+	import { loginUserData } from "../store.js";
 	import Editmode from "./editmode.svelte";
 	import { browser } from '$app/env';
 	import "../app.css";
@@ -8,12 +8,12 @@
 		{ 
 			id: 'a', pwd: '123',
 			name: '이씨', birth: '1968년 6월 23일',
-			img: 'Mr.Lee.jpeg', imgAlt: 'Lee Jae-yong'
+			idPicture: 'Mr.Lee.jpeg', pictureAlt: 'Lee Jae-yong'
 		},
 		{ 
 			id: 'b', pwd: '345',
       		name: '정씨', birth: '1968년 9월 19일',
-			img: 'Mr.chung.jpeg', imgAlt: 'Chung Yong-jin'
+			idPicture: 'Mr.chung.jpeg', pictureAlt: 'Chung Yong-jin'
 		}
 	];
 
@@ -56,37 +56,28 @@
 
 	let storageData;
 
-	if(browser){
-		storageData = JSON.parse(localStorage.getItem('ID-a'))
-		// let storageFull = JSON.parse(storageData)
-		// let storageName = storageFull.name;
-		// let storageBirth = storageFull.birth;
-		// let storageImg = storageFull.img;
-		// let storageAlt = storageFull.alt;
+
+    if(findUser && browser){ //login 가능한 상태
+		console.log(findUser)
+		storageData = JSON.parse(localStorage.getItem(findUser.id))
+		console.log(storageData)
+		if(storageData){
+			storageData.userId = findUser.id
+			loginUserData.set(storageData)
+			logged = true;
+			errored =false;
+		} else {
+			loginUserData.set(findUser)
+			logged = true;
+			errored =false;
+		}
 	}
-
-
-	
-    if(findUser && browser && !storageData){ //login 가능한 상태
-		name.set(findUser.name);
-		birth.set(findUser.birth);
-      	idPicture.set(findUser.img);
-      	pictureAlt.set(findUser.imgAlt);
-      	logged = true;
-      	errored =false;
-		localStorage.setItem('Key', (inputId))
-	} else if(findUser && storageData && browser) {
-		name.set(storageData.name)
-		birth.set(storageData.birth)
-		idPicture.set(storageData.img)
-		pictureAlt.set(storageData.alt)
-		logged = true;
-      	errored =false;
-		localStorage.setItem('Key', (inputId))
-	} else {
+		else {
 		errored = true;
 	}
+	
 }
+
 
 </script>
 <body>
@@ -120,9 +111,9 @@
 
 		{#if logged}
 			<div class="loggedIn">
-				<h1>환영합니다 {$name} 회원님</h1>
-				<h2>생년월일: {$birth} </h2>
-				<img id="Lee" src = {$idPicture} alt = {$pictureAlt}>
+				<h1>환영합니다 {$loginUserData.name} 회원님</h1>
+				<h2>생년월일: {$loginUserData.birth} </h2>
+				<img id="Lee" src = {$loginUserData.idPicture} alt = {$loginUserData.pictureAlt}>
 				<button on:click={editToggle}>수정</button>
 				<button on:click={logoutButton}>로그아웃</button>
 			</div>
