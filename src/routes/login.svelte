@@ -54,7 +54,20 @@
 
     const findUser = checkUser(inputId, inputPass);
 
-    if(findUser && browser){ //login 가능한 상태
+	let storageData;
+
+	if(browser){
+		storageData = JSON.parse(localStorage.getItem('ID-a'))
+		// let storageFull = JSON.parse(storageData)
+		// let storageName = storageFull.name;
+		// let storageBirth = storageFull.birth;
+		// let storageImg = storageFull.img;
+		// let storageAlt = storageFull.alt;
+	}
+
+
+	
+    if(findUser && browser && !storageData){ //login 가능한 상태
 		name.set(findUser.name);
 		birth.set(findUser.birth);
       	idPicture.set(findUser.img);
@@ -62,22 +75,18 @@
       	logged = true;
       	errored =false;
 		localStorage.setItem('Key', (inputId))
+	} else if(findUser && storageData && browser) {
+		name.set(storageData.name)
+		birth.set(storageData.birth)
+		idPicture.set(storageData.img)
+		pictureAlt.set(storageData.alt)
+		logged = true;
+      	errored =false;
+		localStorage.setItem('Key', (inputId))
 	} else {
 		errored = true;
 	}
 }
-
-
-	if(browser){
-		let storageData = {
-		key: localStorage.getItem('Key'),
-		storageName: localStorage.getItem('name'),
-		storageBirth: localStorage.getItem('birth'),
-		storageImg: localStorage.getItem('img'),
-		storageAlt: localStorage.getItem('alt')
-		}
-		console.log(storageData)
-	}
 
 </script>
 <body>
