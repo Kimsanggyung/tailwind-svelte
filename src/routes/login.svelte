@@ -56,13 +56,15 @@
 
 	let storageData;
 
-
     if(findUser && browser){ //login 가능한 상태
-		console.log(findUser)
-		storageData = JSON.parse(localStorage.getItem(findUser.id))
-		console.log(storageData)
+		console.log(findUser);
+		loginUserData.userId = findUser.id;
+		storageData = JSON.parse(localStorage.getItem(findUser.id));
+		console.log(storageData);
+
 		if(storageData){
 			storageData.userId = findUser.id
+			console.log(storageData)
 			loginUserData.set(storageData)
 			logged = true;
 			errored =false;
