@@ -55,10 +55,18 @@
 			storageData.userId = findUser.id
 			console.log(storageData)
 			loginUserData.set(storageData)
+			loginUserData.name = storageData.name
+			loginUserData.birth = storageData.birth
+			loginUserData.idPicture = storageData.idPicture
+			loginUserData.pictureAlt = storageData.pictureAlt 
 			stateData.logged = true;
 			stateData.errored =false;
 		} else {
 			loginUserData.set(findUser)
+			loginUserData.name = findUser.name
+			loginUserData.birth = findUser.birth
+			loginUserData.idPicture = findUser.idPicture
+			loginUserData.pictureAlt = findUser.pictureAlt 
 			stateData.logged = true;
 			stateData.errored =false;
 		}
