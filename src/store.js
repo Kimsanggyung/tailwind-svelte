@@ -7,3 +7,17 @@ export const loginUserData = writable({
     pictureAlt: '',
     userId: ''
 })
+
+export const stateData = writable({
+    check: false,
+  	logged:  false,
+  	errored: null,
+    editMode: false
+})
+
+export const errorMessege = writable({
+  nameError: '',
+  birthError: '',
+  imgError: '',
+  altError: ''
+})
