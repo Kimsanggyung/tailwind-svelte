@@ -1,6 +1,7 @@
 <script>
-	import { loginUserData } from "../store.js";
+	import { loginUserData, stateData } from "../store.js";
 	import Editmode from "./editmode.svelte";
+	import LogeedIn from "./logeedIn.svelte"
 	import { browser } from '$app/env';
 	import "../app.css";
 	
@@ -17,23 +18,10 @@
 		}
 	];
 
-	let check = {checked: false}
-  	let logged = false;
-	let editMode = false;
-  	let errored = null;
 	let inputId = '';
 	let inputPass = '';
 
 	const CLICKCHECK = () => check.checked = !check.checked;
-
-  	const editToggle = () => editMode = !editMode;
-	
-	const logoutButton = () =>{
-		logged = !logged;
-		if(editMode){
-			editMode = !editMode
-		}
-	}
   
 	if(browser){
 		let storageId = localStorage.getItem('ID');
@@ -50,7 +38,7 @@
 	}
 	
 	const logIn = () => {
-    if(check.checked) localStorage.setItem('ID', inputId);
+    if(!stateData.check) localStorage.setItem('ID', inputId);
 
     const findUser = checkUser(inputId, inputPass);
 
@@ -61,21 +49,22 @@
 		loginUserData.userId = findUser.id;
 		storageData = JSON.parse(localStorage.getItem(findUser.id));
 		console.log(storageData);
-
+		stateData.Editmode = !stateData.Editmode;
+		console.log(stateData.Editmode)
 		if(storageData){
 			storageData.userId = findUser.id
 			console.log(storageData)
 			loginUserData.set(storageData)
-			logged = true;
-			errored =false;
+			stateData.logged = true;
+			stateData.errored =false;
 		} else {
 			loginUserData.set(findUser)
-			logged = true;
-			errored =false;
+			stateData.logged = true;
+			stateData.errored =false;
 		}
 	}
 		else {
-		errored = true;
+		stateData.errored = true;
 	}
 	
 }
@@ -86,7 +75,7 @@
 
 	<main>
 
-		{#if !logged}
+		{#if !stateData.logged}
 			<div class="flex items-center justify-center min-h-screen bg-gray-100">
 				<div class="px-8 py-6 mt-4 text-left bg-white shadow-lg">
 					<h3 class="text-2xl font-bold text-center">로그인</h3>
@@ -99,7 +88,7 @@
 								<input bind:value={inputPass} type="password" placeholder="비밀번호"
 									class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600">
 							</div>
-							{#if errored }
+							{#if stateData.errored }
 								<span class='text-red-600'>아이디 또는 비밀번호가 옳지않습니다.</span>
 							{/if}
 							<div class="flex items-baseline justify-between">
@@ -111,27 +100,10 @@
 			</div>
 		{/if}
 
-		{#if logged}
-			<div class="loggedIn">
-				<h1>환영합니다 {$loginUserData.name} 회원님</h1>
-				<h2>생년월일: {$loginUserData.birth} </h2>
-				<img id="Lee" src = {$loginUserData.idPicture} alt = {$loginUserData.pictureAlt}>
-				<button on:click={editToggle}>수정</button>
-				<button on:click={logoutButton}>로그아웃</button>
-			</div>
-		{/if}
-
-		{#if editMode}
-			<Editmode/>
+		{#if stateData.logged}
+			<LogeedIn/>
 		{/if}
 
 	</main>
 
 </body>
-
-<style>
-#Lee{
-	width: 175px;
-	height: 269px;
-}
-</style>
