@@ -3,6 +3,7 @@
     // import { time } from './main.js';
 	import Login from "./login.svelte";
     import Editmode from "./editmode.svelte";
+	import LogeedIn from "./logeedIn.svelte"
 	
 </script>
 
