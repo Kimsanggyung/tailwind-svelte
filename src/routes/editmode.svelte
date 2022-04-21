@@ -15,8 +15,8 @@
 
 	const change = () => {
 		
-		const checkNum = /^[0-9]+$/;
-		const checkLength = /^[0-9]{8,8}$/;
+		const checkBirth = /^[0-9 ㅣㄱ-ㅎㅏ-ㅣ가-힣]{13,13}$/;
+		const checkNum = /^[0-9]{8,8}$/;
 		let error = {
 				nameError: '',
   				birthError: '',
@@ -37,11 +37,8 @@
 		if(inputBirth == ''){
 			error['birthError'] = '생년월일 8자리를 입력해주세요.'
 			errorMessege.set(error);
-		}else if(!checkNum.test(inputBirth)){
-			error['birthError'] = '생년월일은 숫자만 입력할 수 있습니다.'
-			errorMessege.set(error);
-		}else if(!checkLength.test(inputBirth)){
-			error['birthError'] = '생년월일은 8자리로 입력해주세요.'
+		}else if(!checkBirth.test(inputBirth)){
+			error['birthError'] = '생년월일은 다음과 같이 입력해 주세여 예)1945년 8월 15일'
 			errorMessege.set(error);
 		}else{
 			error["birthError"] = ""
@@ -71,13 +68,13 @@
 			idPicture: inputPicture,
 			pictureAlt: inputAlt
 		}
+		if(error.nameError == '' && error.birthError == '' && error.imgError == '' && error.altError == ''){
+			loginUserData.set(setInfo)
+			console.log(setInfo)
+			console.log(error)
+		}
 
-		loginUserData.set(setInfo)
-		console.log(setInfo)
-		console.log(error)
-		
-		
-		if(browser){
+		if(browser && error.nameError == '' && error.birthError == '' && error.imgError == '' && error.altError == ''){
 			stateData.editMode = !stateData.editMode
 			console.log(loginUserData.userId)
 			localStorage.setItem(loginUserData.userId , JSON.stringify(setInfo))
