@@ -2,12 +2,12 @@
 	import { browser } from '$app/env';
 	import { loginUserData, stateData, errorMessege } from "../store.js";
    
-	let	inputName = '';
-	let inputBirth = '';
-	let	inputPicture = '';
-	let inputAlt = '';
+	let	inputName = loginUserData.name;
+	let inputBirth = loginUserData.birth;
+	let	inputPicture = loginUserData.idPicture;
+	let inputAlt = loginUserData.pictureAlt;
 
-	console.log(loginUserData.name)
+	console.log(loginUserData)
 	const reset = () => {
 		localStorage.clear()
 		stateData.editMode = !stateData.editMode
@@ -72,14 +72,12 @@
 			pictureAlt: inputAlt
 		}
 
-		if(error == ''){
-			loginUserData.set(setInfo)
-			console.log(setInfo)
-			console.log(error)
-		}
+		loginUserData.set(setInfo)
+		console.log(setInfo)
+		console.log(error)
 		
 		
-		if(browser && error == ''){
+		if(browser){
 			stateData.editMode = !stateData.editMode
 			console.log(loginUserData.userId)
 			localStorage.setItem(loginUserData.userId , JSON.stringify(setInfo))
