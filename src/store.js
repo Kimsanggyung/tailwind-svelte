@@ -10,14 +10,14 @@ export const loginUserData = writable({
 
 export const stateData = writable({
     check: false,
-  	logged:  false,
-  	errored: null,
+    logged:  false,
+    errored: null,
     editMode: false
 })
 
 export const errorMessege = writable({
-  nameError: '',
-  birthError: '',
-  imgError: '',
-  altError: ''
+    nameError: '',
+    birthError: '',
+    imgError: '',
+    altError: ''
 })
