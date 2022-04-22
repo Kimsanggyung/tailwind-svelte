@@ -1,10 +1,10 @@
 <script>
-    import { loginUserData, stateData } from "../store.js";
+	import { loginUserData, stateData } from "../store.js";
 	import Editmode from "./editmode.svelte";
-    import Login from "./login.svelte"
+	import Login from "./login.svelte"
 	import "../app.css";
 
-    const editToggle = () => stateData.editMode = !stateData.editMode;
+	const editToggle = () => stateData.editMode = !stateData.editMode;
 	
 	const logoutButton = () =>{
 		stateData.logged = !stateData.logged;
@@ -13,7 +13,7 @@
 			console.log(stateData.editMode)
 		}
 	}
-  
+
 </script>
 
 <main>
@@ -32,10 +32,10 @@
 	{/if}
 
 	{#if stateData.editMode}
-	    <Editmode/>
+		<Editmode/>
 	{/if}
 
-    {#if !stateData.logged}
-        <Login/>
-    {/if}
+	{#if !stateData.logged}
+		<Login/>
+	{/if}
 </main>

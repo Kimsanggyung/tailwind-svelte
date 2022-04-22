@@ -6,14 +6,14 @@
 	import "../app.css";
 	
 	const userData = [
-		{ 
+		{
 			id: 'a', pwd: '123',
 			name: '이씨', birth: '1968년 6월 23일',
 			idPicture: 'Mr.Lee.jpeg', pictureAlt: 'Lee Jae-yong'
 		},
-		{ 
+		{
 			id: 'b', pwd: '345',
-      		name: '정씨', birth: '1968년 9월 19일',
+			name: '정씨', birth: '1968년 9월 19일',
 			idPicture: 'Mr.chung.jpeg', pictureAlt: 'Chung Yong-jin'
 		}
 	];
@@ -22,7 +22,7 @@
 	let inputPass = '';
 
 	const CLICKCHECK = () => check.checked = !check.checked;
-  
+
 	if(browser){
 		let storageId = localStorage.getItem('ID');
 		if(storageId !== null){
@@ -38,47 +38,47 @@
 	}
 	
 	const logIn = () => {
-    if(!stateData.check) localStorage.setItem('ID', inputId);
+		if(!stateData.check) localStorage.setItem('ID', inputId);
 
-    const findUser = checkUser(inputId, inputPass);
+		const findUser = checkUser(inputId, inputPass);
 
-	let storageData;
+		let storageData;
 
-    if(findUser && browser){ //login 가능한 상태
-		console.log(findUser);
-		loginUserData.userId = findUser.id;
-		storageData = JSON.parse(localStorage.getItem(findUser.id));
-		console.log(storageData);
-		stateData.Editmode = !stateData.Editmode;
-		console.log(stateData.Editmode)
-		if(storageData){
-			storageData.userId = findUser.id
-			console.log(storageData)
-			loginUserData.set(storageData)
-			loginUserData.name = storageData.name
-			loginUserData.birth = storageData.birth
-			loginUserData.idPicture = storageData.idPicture
-			loginUserData.pictureAlt = storageData.pictureAlt 
-			stateData.logged = true;
-			stateData.errored =false;
-		} else {
-			loginUserData.set(findUser)
-			loginUserData.name = findUser.name
-			loginUserData.birth = findUser.birth
-			loginUserData.idPicture = findUser.idPicture
-			loginUserData.pictureAlt = findUser.pictureAlt 
-			stateData.logged = true;
-			stateData.errored =false;
+		if(findUser && browser){ //login 가능한 상태
+			console.log(findUser);
+			loginUserData.userId = findUser.id;
+			storageData = JSON.parse(localStorage.getItem(findUser.id));
+			console.log(storageData);
+			stateData.Editmode = !stateData.Editmode;
+			console.log(stateData.Editmode)
+			if(storageData){
+				storageData.userId = findUser.id
+				console.log(storageData)
+				loginUserData.set(storageData)
+				loginUserData.name = storageData.name
+				loginUserData.birth = storageData.birth
+				loginUserData.idPicture = storageData.idPicture
+				loginUserData.pictureAlt = storageData.pictureAlt 
+				stateData.logged = true;
+				stateData.errored =false;
+			} else {
+				loginUserData.set(findUser)
+				loginUserData.name = findUser.name
+				loginUserData.birth = findUser.birth
+				loginUserData.idPicture = findUser.idPicture
+				loginUserData.pictureAlt = findUser.pictureAlt 
+				stateData.logged = true;
+				stateData.errored =false;
+			}
+		}
+		else {
+			stateData.errored = true;
 		}
 	}
-		else {
-		stateData.errored = true;
-	}
-	
-}
 
 
 </script>
+
 <body>
 
 	<main>

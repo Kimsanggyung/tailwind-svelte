@@ -1,7 +1,7 @@
 <script>
 	import { browser } from '$app/env';
 	import { loginUserData, stateData, errorMessege } from "../store.js";
-   
+
 	let	inputName = loginUserData.name;
 	let inputBirth = loginUserData.birth;
 	let	inputPicture = loginUserData.idPicture;
@@ -16,18 +16,21 @@
 	const change = () => {
 		
 		const checkBirth = /^[0-9 ㅣㄱ-ㅎㅏ-ㅣ가-힣]{13,13}$/;
-		const checkNum = /^[0-9]{8,8}$/;
+		const checkStr = /^[ㄱ-ㅎ-가-힣a-zA-Z\s]+$/
 		let error = {
-				nameError: '',
-  				birthError: '',
-  				imgError: '',
-  				altError: ''
+			nameError: '',
+			birthError: '',
+			imgError: '',
+			altError: ''
 			}
 		
 		console.log(loginUserData.name)
 		
 		if(inputName == ''){
 			error["nameError"] = "이름을 입력해주세요."
+			errorMessege.set(error);
+		}else if(!checkStr.test(inputName)){
+			error["nameError"] = "이름은 한글, 영문만 입력 가능합니다."
 			errorMessege.set(error);
 		}else{
 			error["nameError"] = "";
@@ -38,7 +41,7 @@
 			error['birthError'] = '생년월일 8자리를 입력해주세요.'
 			errorMessege.set(error);
 		}else if(!checkBirth.test(inputBirth)){
-			error['birthError'] = '생년월일은 다음과 같이 입력해 주세여 예)1945년 8월 15일'
+			error['birthError'] = '생년월일은 다음과 같이 입력해 주세여 예)1945년 08월 15일'
 			errorMessege.set(error);
 		}else{
 			error["birthError"] = ""
@@ -80,7 +83,6 @@
 			localStorage.setItem(loginUserData.userId , JSON.stringify(setInfo))
 		}
 	}
-	
 
 </script>
 	{#if stateData.editMode && browser} 
@@ -93,8 +95,10 @@
 			<input bind:value={inputBirth} type="text" placeholder='생년월일 8자리를 입력해 주세요.' class="w-60 h-12 text-lg">
 			<span class='text-red-600 text-lg'>{$errorMessege.birthError}</span>
 		</div>
+
 			<input bind:value={inputPicture} type="text" placeholder='시진주소를 입력해 주세요.' class="w-60 h-12 text-lg">
 			<span class='text-red-600 text-lg'>{$errorMessege.imgError}</span>
+		
 		<div>
 			<input bind:value={inputAlt} type="text" placeholder="사진소개를 써주세요."	class="w-60 h-12 text-lg">
 			<span class='text-red-600 text-lg'>{$errorMessege.altError}</span>
@@ -103,6 +107,4 @@
 		<button on:click={change} class="text-xl">등록</button>
 		<button on:click={reset} class="text-xl">초기화</button>
 	{/if}
-	
-	
 
