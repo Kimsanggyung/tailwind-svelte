@@ -26,17 +26,15 @@
 	const change = () => {
 		
 		const checkBirth = /^(19|20)\d{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[0-1])$/;
-
-		const checkStr = /^[ㄱ-ㅎ-가-힣a-zA-Z\s]+$/
+		const checkDefault = /^(19[0-9][0-9]|20\d{2})년\s(0[0-9]|1[0-2])월\s(0[1-9]|[1-2][0-9]|3[0-1])일$/
+		const checkStr = /^[가-힣a-zA-Z]+$/
 		let error = {
 			nameError: '',
 			birthError: '',
 			imgError: '',
 			altError: ''
 			}
-		
-		console.log(loginUserData.name)
-		
+				
 		if(inputName == ''){
 			error["nameError"] = "이름을 입력해주세요."
 			errorMessege.set(error);
@@ -51,16 +49,18 @@
 		if(inputBirth == ''){
 			error['birthError'] = '생년월일 8자리를 입력해주세요.'
 			errorMessege.set(error);
-		}else if(!checkBirth.test(inputBirth)){
-			error['birthError'] = '옳바른 생년월일을 입력해주세요.'
+		}else if(!checkBirth.test(inputBirth) && !checkDefault.test(inputBirth)){
+			error['birthError'] = '올바른 생년월일 8자리를 입력해주세요.'
 			errorMessege.set(error);
-		}else{
+		}else if(checkBirth.test(inputBirth)){
+			inputBirth = inputBirth.replace(/(\d{4})(\d{2})(\d{2})/, '$1년 $2월 $3일')
+			console.log(inputBirth)
 			error["birthError"] = ""
 			errorMessege.set(error);
 		}
 
 		if(inputPicture == ''){
-			error['imgError'] ='사진 주소를 입략력주세요.'
+			error['imgError'] ='사진 주소를 입력주세요.'
 			errorMessege.set(error)
 		}else{
 			error['imgError'] =''
@@ -68,7 +68,7 @@
 		}
 
 		if(inputAlt == ''){
-			error['altError'] ='사진 소개를 입략해주세요.'
+			error['altError'] ='사진 소개를 입력해주세요.'
 			errorMessege.set(error)
 		}else{
 			error['altError'] =''
@@ -82,6 +82,7 @@
 			idPicture: inputPicture,
 			pictureAlt: inputAlt
 		}
+
 		if(error.nameError == '' && error.birthError == '' && error.imgError == '' && error.altError == ''){
 			loginUserData.set(setInfo)
 			console.log(setInfo)
