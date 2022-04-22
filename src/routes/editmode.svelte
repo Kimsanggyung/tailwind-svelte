@@ -2,10 +2,20 @@
 	import { browser } from '$app/env';
 	import { loginUserData, stateData, errorMessege } from "../store.js";
 
-	let	inputName = loginUserData.name;
-	let inputBirth = loginUserData.birth;
-	let	inputPicture = loginUserData.idPicture;
-	let inputAlt = loginUserData.pictureAlt;
+	let infoData;
+
+	loginUserData.subscribe(value =>{
+		infoData = value
+	})
+	console.log(infoData)
+
+	let	inputName = infoData.name;
+	let inputBirth = infoData.birth;
+	let	inputPicture = infoData.idPicture;
+	let inputAlt = infoData.pictureAlt;
+	
+
+	
 
 	console.log(loginUserData)
 	const reset = () => {
@@ -15,7 +25,8 @@
 
 	const change = () => {
 		
-		const checkBirth = /^[0-9 ㅣㄱ-ㅎㅏ-ㅣ가-힣]{13,13}$/;
+		const checkBirth = /^(19|20)\d{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[0-1])$/;
+
 		const checkStr = /^[ㄱ-ㅎ-가-힣a-zA-Z\s]+$/
 		let error = {
 			nameError: '',
@@ -41,7 +52,7 @@
 			error['birthError'] = '생년월일 8자리를 입력해주세요.'
 			errorMessege.set(error);
 		}else if(!checkBirth.test(inputBirth)){
-			error['birthError'] = '생년월일은 다음과 같이 입력해 주세여 예)1945년 08월 15일'
+			error['birthError'] = '옳바른 생년월일을 입력해주세요.'
 			errorMessege.set(error);
 		}else{
 			error["birthError"] = ""

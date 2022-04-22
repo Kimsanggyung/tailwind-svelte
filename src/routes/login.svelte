@@ -8,12 +8,12 @@
 	const userData = [
 		{
 			id: 'a', pwd: '123',
-			name: '이씨', birth: '1968년 6월 23일',
+			name: '이씨', birth: '1968년 06월 23일',
 			idPicture: 'Mr.Lee.jpeg', pictureAlt: 'Lee Jae-yong'
 		},
 		{
 			id: 'b', pwd: '345',
-			name: '정씨', birth: '1968년 9월 19일',
+			name: '정씨', birth: '1968년 09월 19일',
 			idPicture: 'Mr.chung.jpeg', pictureAlt: 'Chung Yong-jin'
 		}
 	];
@@ -55,18 +55,10 @@
 				storageData.userId = findUser.id
 				console.log(storageData)
 				loginUserData.set(storageData)
-				loginUserData.name = storageData.name
-				loginUserData.birth = storageData.birth
-				loginUserData.idPicture = storageData.idPicture
-				loginUserData.pictureAlt = storageData.pictureAlt 
 				stateData.logged = true;
 				stateData.errored =false;
 			} else {
 				loginUserData.set(findUser)
-				loginUserData.name = findUser.name
-				loginUserData.birth = findUser.birth
-				loginUserData.idPicture = findUser.idPicture
-				loginUserData.pictureAlt = findUser.pictureAlt 
 				stateData.logged = true;
 				stateData.errored =false;
 			}
