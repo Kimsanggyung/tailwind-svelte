@@ -4,7 +4,6 @@ export const loginUserData = writable({
     name: '',
     birth: '',
     idPicture: '',
-    pictureAlt: '',
     userId: ''
 })
 

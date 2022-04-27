@@ -12,11 +12,12 @@
 	let	inputName = infoData.name;
 	let inputBirth = infoData.birth;
 	let	inputPicture = infoData.idPicture;
-	let inputAlt = infoData.pictureAlt;
-	
-
-	
-
+	let error = {
+			nameError: '',
+			birthError: '',
+			imgError: '',
+			}
+			
 	console.log(loginUserData)
 	const reset = () => {
 		localStorage.clear()
@@ -28,12 +29,6 @@
 		const checkBirth = /^(19|20)\d{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[0-1])$/;
 		const checkDefault = /^(19[0-9][0-9]|20\d{2})년\s(0[0-9]|1[0-2])월\s(0[1-9]|[1-2][0-9]|3[0-1])일$/
 		const checkStr = /^[가-힣a-zA-Z]+$/
-		let error = {
-			nameError: '',
-			birthError: '',
-			imgError: '',
-			altError: ''
-			}
 				
 		if(inputName == ''){
 			error["nameError"] = "이름을 입력해주세요."
@@ -67,29 +62,19 @@
 			errorMessege.set(error)
 		}
 
-		if(inputAlt == ''){
-			error['altError'] ='사진 소개를 입력해주세요.'
-			errorMessege.set(error)
-		}else{
-			error['altError'] =''
-			errorMessege.set(error)
-		}
-
-
 		let setInfo = {
 			name: inputName,
 			birth: inputBirth,
-			idPicture: inputPicture,
-			pictureAlt: inputAlt
+			idPicture: inputPicture
 		}
 
-		if(error.nameError == '' && error.birthError == '' && error.imgError == '' && error.altError == ''){
+		if(error.nameError == '' && error.birthError == '' && error.imgError == ''){
 			loginUserData.set(setInfo)
 			console.log(setInfo)
 			console.log(error)
 		}
 
-		if(browser && error.nameError == '' && error.birthError == '' && error.imgError == '' && error.altError == ''){
+		if(browser && error.nameError == '' && error.birthError == '' && error.imgError == ''){
 			stateData.editMode = !stateData.editMode
 			console.log(loginUserData.userId)
 			localStorage.setItem(loginUserData.userId , JSON.stringify(setInfo))
@@ -100,7 +85,7 @@
 	{#if stateData.editMode && browser} 
 		<div>	
 			<input bind:value={inputName} type="text" placeholder='이름을 입력해 주세요.' class="w-60 h-12 text-lg"> 
-			<span class='text-red-600 text-lg'>{$errorMessege.nameError}</span>
+			<span class='text-red-600 text-lg'>{error.nameError}</span>
 		</div>
 
 		<div>
@@ -108,12 +93,9 @@
 			<span class='text-red-600 text-lg'>{$errorMessege.birthError}</span>
 		</div>
 
+		<div>
 			<input bind:value={inputPicture} type="text" placeholder='시진주소를 입력해 주세요.' class="w-60 h-12 text-lg">
 			<span class='text-red-600 text-lg'>{$errorMessege.imgError}</span>
-		
-		<div>
-			<input bind:value={inputAlt} type="text" placeholder="사진소개를 써주세요."	class="w-60 h-12 text-lg">
-			<span class='text-red-600 text-lg'>{$errorMessege.altError}</span>
 		</div>
 
 		<button on:click={change} class="text-xl">등록</button>
