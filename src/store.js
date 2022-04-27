@@ -13,10 +13,3 @@ export const stateData = writable({
     errored: null,
     editMode: false
 })
-
-export const errorMessege = writable({
-    nameError: '',
-    birthError: '',
-    imgError: '',
-    altError: ''
-})
