@@ -1,22 +1,14 @@
 <script>
-	import { loginUserData, stateData } from "../store.js";
+	import { loginUserData, stateData, storeUserData } from "../store.js";
 	import Editmode from "./editmode.svelte";
 	import LogeedIn from "./logeedIn.svelte"
 	import { browser } from '$app/env';
 	import "../app.css";
 	
-	const userData = [
-		{
-			id: 'a', pwd: '123',
-			name: '이씨', birth: '1968년 06월 23일',
-			idPicture: 'Mr.Lee.jpeg'
-		},
-		{
-			id: 'b', pwd: '345',
-			name: '정씨', birth: '1968년 09월 19일',
-			idPicture: 'Mr.chung.jpeg'
-		}
-	];
+	let userData
+	storeUserData.subscribe(value =>{
+		userData = value
+	})
 
 	let inputId = '';
 	let inputPass = '';
@@ -38,7 +30,7 @@
 	}
 	
 	const logIn = () => {
-		if(!stateData.check) localStorage.setItem('ID', inputId);
+		if(stateData.check) localStorage.setItem('ID', inputId);
 
 		const findUser = checkUser(inputId, inputPass);
 
@@ -46,6 +38,7 @@
 
 		if(findUser && browser){ //login 가능한 상태
 			console.log(findUser);
+			localStorage.setItem('loginUser',inputId)
 			loginUserData.userId = findUser.id;
 			storageData = JSON.parse(localStorage.getItem(findUser.id));
 			console.log(storageData);
